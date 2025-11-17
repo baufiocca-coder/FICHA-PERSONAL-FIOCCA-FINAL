@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Ficha Personal - Bautista Fiocca</title>
+  <style>
+    :root {
+      --bg: #f3f3f3;
+      --card-bg: #ffffff;
+      --primary: #f6a623;
+      --primary-dark: #e28b07;
+      --text-main: #333333;
+      --text-soft: #777777;
+      --accent: #8e44ad;
+      --shadow: 0 8px 20px rgba(0,0,0,0.08);
+      --border-soft: #e6e6e6;
+    }
+
+    body.dark {
+      --bg: #101014;
+      --card-bg: #181820;
+      --primary: #f6a623;
+      --primary-dark: #ffb733;
+      --text-main: #f5f5f5;
+      --text-soft: #b0b0b8;
+      --accent: #c39bd3;
+      --shadow: 0 8px 25px rgba(0,0,0,0.55);
+      --border-soft: #2b2b35;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text-main);
+      display: flex;
+      justify-content: center;
+      min-height: 100vh;
+      padding: 20px;
+      transition: background 0.3s ease, color 0.3s ease;
+    }
+
+    .page {
+      width: 100%;
+      max-width: 1000px;
+      background: linear-gradient(to bottom, #ffffff 0%, #f7f7f7 40%, #f3f3f3 100%);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      overflow: hidden;
+      position: relative;
+    }
+
+    body.dark .page {
+      background: linear-gradient(to bottom, #181820 0%, #181820 40%, #101014 100%);
+    }
+
+    .top-bar {
+      background: linear-gradient(90deg, var(--primary), var(--primary-dark));
+      padding: 18px 28px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      color: #fff;
+    }
+
+    .top-bar-title {
+      font-size: 1.1rem;
+      font-weight: bold;
+    }
+
+    .theme-toggle {
+      width: 40px;
+      height: 40px;
+      border-radius: 999px;
+      border: 2px solid rgba(255,255,255,0.8);
+      background: transparent;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.3rem;
+      cursor: pointer;
+      transition: background 0.2s ease, transform 0.2s ease;
+      color: #fff;
+    }
+
+    .theme-toggle:hover {
+      background: rgba(255,255,255,0.18);
+      transform: translateY(-1px);
+    }
+
+    main {
+      padding: 26px 22px 16px;
+    }
+
+    .profile-header {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 24px;
+    }
+
+    .avatar-ring {
+      width: 140px;
+      height: 140px;
+      border-radius: 50%;
+      padding: 4px;
+      background: radial-gradient(circle at top, #ffffff 0%, #ffffff 35%, var(--accent) 100%);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 12px;
+    }
+
+    .avatar-ring img {
+      width: 100%;
+      height: 100%;
+      border-radius: 50%;
+      object-fit: cover;
+      border: 3px solid #ffffff;
+    }
+
+    .profile-name {
+      font-size: 1.6rem;
+      font-weight: 600;
+      text-align: center;
+    }
+
+    .info-grid-wrapper {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 22px;
+      border: 1px solid var(--border-soft);
+    }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0,1fr));
+      gap: 12px 40px;
+    }
+
+    .info-item span {
+      display: block;
+    }
+
+    .info-label {
+      font-size: 0.8rem;
+      color: var(--accent);
+      margin-bottom: 2px;
+    }
+
+    .info-value {
+      font-size: 0.9rem;
+      color: var(--text-main);
+    }
+
+    .about-card {
+      background: var(--card-bg);
+      border-radius: 14px;
+      padding: 18px 20px;
+      box-shadow: var(--shadow);
+      margin-bottom: 26px;
+      border: 1px solid var(--border-soft);
+    }
+
+    .about-title {
+      font-size: 0.95rem;
+      color: var(--accent);
+      margin-bottom: 6px;
+    }
+
+    .about-text {
+      font-size: 0.9rem;
+      color: var(--text-soft);
+      line-height: 1.5;
+    }
+
+    .projects-grid {
+      display: grid;
+      grid-template-columns: repeat(3, minmax(0,1fr));
+      gap: 18px;
+      margin-bottom: 18px;
+    }
+
+    .project-card {
+      background: var(--card-bg);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      padding: 10px 10px 14px;
+      border: 1px solid var(--border-soft);
+    }
+
+    .project-link {
+      text-decoration: none;
+      color: inherit;
+      display: block;
+    }
+
+    .project-image-wrapper {
+      border-radius: 14px;
+      overflow: hidden;
+      margin-bottom: 8px;
+      height: 130px;
+      background: #ddd;
+    }
+
+    .project-image-wrapper img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      display: block;
+    }
+
+    .project-title {
+      font-size: 0.9rem;
+      font-weight: 600;
+      margin-bottom: 2px;
+    }
+
+    .project-subtitle {
+      font-size: 0.78rem;
+      color: var(--text-soft);
+      line-height: 1.2;
+    }
+
+    footer {
+      text-align: center;
+      padding: 10px;
+      font-size: 0.75rem;
+      color: var(--text-soft);
+    }
+
+    /* Responsividad */
+    @media (max-width: 768px) {
+      main {
+        padding: 18px 16px 12px;
+      }
+
+      .info-grid {
+        grid-template-columns: 1fr;
+        gap: 10px 18px;
+      }
+
+      .projects-grid {
+        grid-template-columns: 1fr;
+      }
+
+      .project-image-wrapper {
+        height: 160px;
+      }
+
+      .profile-name {
+        font-size: 1.3rem;
+      }
+    }
+
+    @media (max-width: 480px) {
+      body {
+        padding: 10px;
+      }
+
+      .top-bar {
+        padding: 14px 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="page">
+    <header class="top-bar">
+      <div class="top-bar-title">Ficha Personal</div>
+      <button class="theme-toggle" id="themeToggle" aria-label="Cambiar tema">🌙</button>
+    </header>
+
+    <main>
+      <section class="profile-header">
+        <div class="avatar-ring">
+          <img src="perfil.jpeg" alt="Foto de perfil de Bautista Fiocca" />
+        </div>
+        <h1 class="profile-name">Bautista Fiocca</h1>
+      </section>
+
+      <section class="info-grid-wrapper">
+        <div class="info-grid">
+          <div class="info-item">
+            <span class="info-label">Nombre Completo</span>
+            <span class="info-value">Bautista Fiocca</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Nº de Legajo</span>
+            <span class="info-value">1159248</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Carrera</span>
+            <span class="info-value">Administración de empresas</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Comisión</span>
+            <span class="info-value">536117</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Mail</span>
+            <span class="info-value">Bfiocca@uade.edu.ar</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Teléfono</span>
+            <span class="info-value">-</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Ciudad</span>
+            <span class="info-value">Buenos Aires</span>
+          </div>
+          <div class="info-item">
+            <span class="info-label">Institución</span>
+            <span class="info-value">UADE</span>
+          </div>
+        </div>
+      </section>
+
+      <section class="about-card">
+        <h2 class="about-title">Sobre mí</h2>
+        <p class="about-text">
+          Soy Bautista Fiocca, tengo 24 años, estudio en la UADE Administración de Empresas y estoy cursando el segundo año aproximadamente.
+          Me gustan los deportes, en especial el fútbol y el golf.
+        </p>
+      </section>
+
+      <section class="projects-grid">
+        <article class="project-card">
+          <a class="project-link" href="https://baufiocca-coder.github.io/Fan-Page-2/" target="_blank" rel="noopener noreferrer">
+            <div class="project-image-wrapper">
+              <img src="familyguy.jpg" alt="Fan Page - Family Guy" />
+            </div>
+            <div class="project-title">Fan page</div>
+            <div class="project-subtitle">Sitio publicado</div>
+          </a>
+        </article>
+
+        <article class="project-card">
+          <a class="project-link" href="https://baufiocca-coder.github.io/LocalComercial/" target="_blank" rel="noopener noreferrer">
+            <div class="project-image-wrapper">
+              <img src="greenshot.png" alt="Local comercial Greenshot" />
+            </div>
+            <div class="project-title">Local comercial</div>
+            <div class="project-subtitle">Sitio publicado</div>
+          </a>
+        </article>
+
+        <article class="project-card">
+          <a class="project-link" href="https://galeriaurbana.me/" target="_blank" rel="noopener noreferrer">
+            <div class="project-image-wrapper">
+              <img src="galeriaurbana.jpeg" alt="Centro comercial Galería Urbana" />
+            </div>
+            <div class="project-title">Centro comercial</div>
+            <div class="project-subtitle">Sitio publicado</div>
+          </a>
+        </article>
+      </section>
+    </main>
+
+    <footer>
+      © 2025 Todos los derechos reservados
+    </footer>
+  </div>
+
+  <script>
+    const toggleBtn = document.getElementById('themeToggle');
+
+    // Cargar tema guardado
+    const savedTheme = localStorage.getItem('theme');
+    if (savedTheme === 'dark') {
+      document.body.classList.add('dark');
+      toggleBtn.textContent = '☀️';
+    }
+
+    toggleBtn.addEventListener('click', () => {
+      const isDark = document.body.classList.toggle('dark');
+      toggleBtn.textContent = isDark ? '☀️' : '🌙';
+      localStorage.setItem('theme', isDark ? 'dark' : 'light');
+    });
+  </script>
+</body>
+</html>
